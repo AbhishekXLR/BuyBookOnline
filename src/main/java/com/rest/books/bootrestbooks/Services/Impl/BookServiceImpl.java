@@ -12,6 +12,7 @@ import com.rest.books.bootrestbooks.Repositories.BookRepository;
 import com.rest.books.bootrestbooks.Repositories.CategoryRepo;
 import com.rest.books.bootrestbooks.Services.BooksService;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -47,8 +48,19 @@ public class BookServiceImpl implements BooksService {
 
 
         Book result = this.bookRepository.save(book);
+        PropertyMap<Book, ResponseBookDto> propertyMap = new PropertyMap<>() {
+
+            @Override
+            protected void configure() {
+                map().setAuthorName(source.getAuthor().getFirstName());
+                map().setCategoryName(source.getCategory().getCategoryName());
+            }
+        };
+
+        modelMapper.addMappings(propertyMap);
         ResponseBookDto respBook = this.modelMapper.map(result, ResponseBookDto.class);
-        respBook.setFirstName(author.getFirstName());
+
+
         return respBook;
 
     }

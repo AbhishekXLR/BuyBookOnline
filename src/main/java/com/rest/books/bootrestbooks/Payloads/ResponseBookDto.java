@@ -1,7 +1,5 @@
 package com.rest.books.bootrestbooks.Payloads;
 
-import com.rest.books.bootrestbooks.Entities.Author;
-import com.rest.books.bootrestbooks.Entities.Category;
 import lombok.Data;
 
 @Data
@@ -32,8 +30,8 @@ public class ResponseBookDto {
     // private AuthorDto author;
    // private CategoryDto category;
 
-    private String firstName;
-    private Category categoryName;
+    private String authorName;
+    private String categoryName;
 
 
 }

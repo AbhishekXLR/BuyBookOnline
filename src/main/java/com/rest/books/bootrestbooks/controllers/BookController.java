@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,14 +53,16 @@ public class BookController {
 
 
     /* Delete Book Handler*/
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/books/{bookId}")
-    public ApiResponse deleteAddress(@PathVariable Integer bookId) {
+    public ApiResponse deleteBook(@PathVariable Integer bookId) {
         this.booksService.deleteBook(bookId);
         return new ApiResponse("Book Deleted Successfully !", true);
     }
 
 
     /* Update Book Handler*/
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/books/{bookId}")
     public ResponseEntity<ResponseBookDto> updateBook(@Valid @RequestBody RequestBookDto requestBookDto, @PathVariable("bookId") int bookId) {
 

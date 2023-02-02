@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -49,8 +50,9 @@ public class AuthorController {
         return new ResponseEntity<>(authorUpdate,HttpStatus.ACCEPTED);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping ("/authors/{authorId}")
-    public ResponseEntity<ApiResponse> deleteUser(@PathVariable Integer authorId){
+    public ResponseEntity<ApiResponse> deleteAuthor(@PathVariable Integer authorId){
         this.authorService.deleteAuthor(authorId);
         return new ResponseEntity<>(new ApiResponse("Author deleted Successfully",true),HttpStatus.OK);
     }
