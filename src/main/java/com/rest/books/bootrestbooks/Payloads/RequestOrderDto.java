@@ -1,8 +1,6 @@
 package com.rest.books.bootrestbooks.Payloads;
 
 
-import com.rest.books.bootrestbooks.Entities.Cart;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.util.List;
