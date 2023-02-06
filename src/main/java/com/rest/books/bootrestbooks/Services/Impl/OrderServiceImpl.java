@@ -40,24 +40,26 @@ public class OrderServiceImpl implements OrderService {
 
         float totalCartAmount = 0f;
         float singleCartAmount = 0f;
-        int availableQuantity = 0;
+
 
         for (AddToCartDto cart : cartList) {
-
+            int availableQuantity = 0;
             int productId = cart.getProductId();
             Optional<Book> book = this.bookRepository.findById(productId);
             if (book.isPresent()) {
                 Book book1 = book.get();
                 if (book1.getAvailableQuantity() < cart.getQuantity()) {
                     System.out.println("select lesser quantity of book");
+                    throw new ResourceNotFoundException("404");
+
                 } else {
                     singleCartAmount = cart.getQuantity() * book1.getPrice();
                     availableQuantity = book1.getAvailableQuantity() - cart.getQuantity();
                 }
+
                 totalCartAmount = totalCartAmount + singleCartAmount;
                 book1.setAvailableQuantity(availableQuantity);
 
-                availableQuantity = 0;
                 cart.setAmount(singleCartAmount);
                 cart.setBookName(book1.getTitle());
                 bookRepository.save(book1);

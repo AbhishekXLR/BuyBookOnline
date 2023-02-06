@@ -17,18 +17,15 @@ import java.util.List;
 @Entity
 public class Orders {
 
+
     @Id
-    @Column(name="order_Id")
+    @Column(name = "order_Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
     @ManyToOne
     private Customer customer;
 
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,targetEntity = Cart.class)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Cart.class)
     private List<Cart> cartItems;
-
-    public Orders(Customer customer, List<AddToCartDto> cartItems) {
-
-    }
 }
